@@ -1,5 +1,7 @@
 # Web Application for Skin Disease Detection
 
+![image1](https://github.com/user-attachments/assets/3ef83f94-6f5a-4b86-a15f-8daa27f23d73)
+
 Web application beta for CTU(Can Tho University) X DGIST(Daegu Gyeongbuk Institute of Science and Technology) IT Project.
 
 ## Requirements
@@ -26,13 +28,21 @@ Designed to be responsive, making it usable on mobile devices, tablet PCs, and m
 
 1. Access via `localhost(or IP address):5000` in a web browser.
 
-2. Upload the images you want to analyze in the 'Upload Photos to Detect' section on the left. (Drag & Drop is available. On mobile devices, you can click the 'browse' button to take a photo and upload it directly.)
+![image2](https://github.com/user-attachments/assets/3ef83f94-6f5a-4b86-a15f-8daa27f23d73)
 
-3. Check the uploaded images in the 'Uploaded Photos' section on the right. You can delete an image by clicking the 'X' button.
+2. Upload the images you want to analyze in the '**Upload Photos to Detect**' section on the left. (Drag & Drop is available. On mobile devices, you can click the 'browse' button to take a photo and upload it directly.)
+
+3. Check the uploaded images in the '**Uploaded Photos**' section on the right. You can delete an image by clicking the 'X' button.
+
+![image3](https://github.com/user-attachments/assets/0d79f0c2-dd9c-49a2-bd94-5c9b13066271)
 
 4. Click the 'Detect!' button at the bottom to execute.
 
+![image4](https://github.com/user-attachments/assets/93a41a7f-38a1-4b5e-8c0a-62ccde32de98)
+
 5. After loading, you will be redirected to the 'Detection Results' page.
+
+![image5](https://github.com/user-attachments/assets/8b859c1e-d505-4637-8607-837b10d13a00)
 
 6.
 - The resulting image with the bounding box drawn will be displayed at the top.
@@ -75,7 +85,7 @@ Function that saves the uploaded image to a temporary folder (lines 47-58) and s
 
 The Yolo V8 model returns various information about objects, including an image with bounding boxes drawn.
 
-Inference is done through `ai_utils.py`, and you can refer (here)[https://github.com/js-ryu/SDDWebApp?tab=readme-ov-file#ai_utilspy] for a detailed explanation of that code.
+Inference is done through `ai_utils.py`, and you can refer [here](https://github.com/js-ryu/SDDWebApp?tab=readme-ov-file#ai_utilspy) for a detailed explanation of that code.
 
 The returned information is then converted to JSON format, and the image with bounding boxes is saved in the temporary folder.
 
