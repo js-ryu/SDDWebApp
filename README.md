@@ -57,7 +57,7 @@ Import `config.yaml` file.
 
 This file stores data to be used in the section explaining results on the 'Detection Results' page.
 
-Check here for detailed explanation.
+Check [here](https://github.com/js-ryu/SDDWebApp?tab=readme-ov-file#configyaml) for detailed explanation.
 
 #### Line 112-113
 
@@ -75,7 +75,7 @@ Function that saves the uploaded image to a temporary folder (lines 47-58) and s
 
 The Yolo V8 model returns various information about objects, including an image with bounding boxes drawn.
 
-Inference is done through `ai_utils.py`, and you can refer here for a detailed explanation of that code.
+Inference is done through `ai_utils.py`, and you can refer (here)[https://github.com/js-ryu/SDDWebApp?tab=readme-ov-file#ai_utilspy] for a detailed explanation of that code.
 
 The returned information is then converted to JSON format, and the image with bounding boxes is saved in the temporary folder.
 
@@ -105,7 +105,7 @@ Function to run the AI model.
 - Specify `classes=[0,1,2,3,4]` at line 9 to match the number of classes with the skin disease model.
     - Therefore, it can recognize {0: 'person', 1: 'bicycle', 2: 'car', 3: 'motorcycle', 4: 'airplane'}, which are mapped to Blackhead, Nodule, Papule, Pustule, and Whitehead, respectively.
 
-### 기타
+### Etc.
 
 - HTML code for page rendering:
     - `templates/index.html`
