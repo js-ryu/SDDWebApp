@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detection Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/detect.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .results-container {
+            width: 80%;
+            max-width: 800px;
+            background: white;
+            padding: 2em;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            margin-top: 2em;
+        }
+        .results-container h2 {
+            text-align: center;
+            color: #333;
+            font-size: 1.3em;
+            margin-bottom: 1.0em;
+        }
+        .results-container h3 {
+            color: #007BFF;
+            text-align: center;
+            font-size: 1.5em;
+            margin: 1em 0;
+        }
+        .results-container p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin: 0.5em 0;
+            color: #333;
+            text-align: left;
+        }
+        .results-container hr {
+            margin: 1em 0;
+            border: 0;
+            height: 1px;
+            background: #007BFF;
+        }
+        .results-container .result {
+            margin: 1em 0;
+        }
+        .results-container .result h4 {
+            color: #003f82;
+            text-align: left;
+            font-size: 1.3em;
+            margin: 0.5em 0;
+        }
+        .results-container .result p {
+            margin: 0.2em 0;
+            padding-left: 1em;
+            text-indent: -1em;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <button id="home-button" onclick="goHome()">Home</button>
+        <h1>Detection Results</h1>
+    </header>
+    <main>
+        <div class="slideshow-container">
+            <div class="prev" onclick="changeSlide(-1)">
+                &#10094;
+            </div>
+            <div class="slides">
+                {% for image in images %}
+                    <div class="slide">
+                        <div class="slide-number">{{ loop.index }}/{{ loop.length }}</div>
+                        <img src="{{ image }}" alt="Uploaded Image" class="uploaded-image">
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="next" onclick="changeSlide(1)">
+                &#10095;
+            </div>
+        </div>
+        <div class="results-container">
+            <div id="result-content">
+                <!-- 결과 설명 내용이 여기에 동적으로 추가됩니다 -->
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="footer-text">
+            <p>Copyright © 2024 CTU & DGIST. All rights reserved.</p>
+            <p>This application is part of an IT project in collaboration with DGIST and Can Tho University, supported by the National Information Society Agency(NIA) and DGIST.</p>
+        </div>
+    </footer>
+    <script>
+        const images = {{ images|tojson }};
+        const results = {{ results|tojson|safe }};
+        let currentSlideIndex = 0;
+
+        document.addEventListener("DOMContentLoaded", () => {
+            showSlide(currentSlideIndex);
+            document.addEventListener("keydown", handleKeydown);
+        });
+
+        function showSlide(index) {
+            const slides = document.querySelectorAll(".slide");
+            const resultContent = document.getElementById("result-content");
+            const slideNumber = document.querySelectorAll(".slide-number");
+
+            if (index >= slides.length) { currentSlideIndex = 0; }
+            if (index < 0) { currentSlideIndex = slides.length - 1; }
+
+            slides.forEach(slide => slide.style.display = "none");
+            slides[currentSlideIndex].style.display = "block";
+
+            slideNumber[currentSlideIndex].textContent = `${currentSlideIndex + 1}/${slides.length}`;
+
+            const imageResults = results[currentSlideIndex];
+            let resultsHtml = '<h2>You have...</h2>';
+
+            if (imageResults.length === 0) {
+                resultsHtml += '<h3>no skin disease!</h3>';
+            } else {
+                let diseases = imageResults.map(result => result.name).join(", ");
+                resultsHtml += `<h3>"${diseases}"</h3>`;
+                resultsHtml += '<hr>';
+
+                imageResults.forEach(result => {
+                    resultsHtml += `
+                        <div class="result">
+                            <h4>⏺ ${result.name}</h4>
+                            <p><strong>Definition:</strong> ${result.definition}</p>
+                            <p><strong>Causes:</strong> ${result.causes}</p>
+                            <p><strong>Prevention:</strong> ${result.prevention}</p>
+                            <p><strong>Treatment:</strong> ${result.treatment}</p>
+                        </div>
+                        <br>
+                    `;
+                });
+            }
+
+            resultContent.innerHTML = resultsHtml;
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlideIndex += direction);
+        }
+
+        function handleKeydown(event) {
+            if (event.key === "ArrowLeft") {
+                changeSlide(-1);
+            } else if (event.key === "ArrowRight") {
+                changeSlide(1);
+            }
+        }
+
+        function goHome() {
+            window.location.href = "/";
+        }
+    </script>
+</body>
+</html>
